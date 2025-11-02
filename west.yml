@@ -1,0 +1,18 @@
+manifest:
+  remotes:
+  - name: zephyr
+    url-base: https://github.com/zephyrproject-rtos
+
+  projects:
+  - name: zephyr
+    path: zephyr
+    remote: zephyr
+    revision: v4.2.1
+    import:
+       true
+
+  - name: zephyr-lang-rust
+    path: modules/lang/rust
+    remote: zephyr
+    revision: main
+
