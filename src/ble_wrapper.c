@@ -5,6 +5,10 @@
 #include <zephyr/bluetooth/uuid.h>
 #include <zephyr/bluetooth/gatt.h>
 
+#include <zephyr/device.h>
+
+extern void rust_ble_disconnected(void);
+
 // Simplified API for Rust
 static void bt_ready(int err)
 {
@@ -20,7 +24,6 @@ int ble_init(void)
 {
     return bt_enable(bt_ready);
 }
-
 
 static const struct bt_data sd[] = {
 	BT_DATA_BYTES(BT_DATA_FLAGS, (BT_LE_AD_GENERAL | BT_LE_AD_NO_BREDR)),
@@ -53,7 +56,6 @@ static void disconnected(struct bt_conn *conn, uint8_t reason)
 {
     printk("Disconnected (reason %u)\n", reason);
     
-    extern void rust_ble_disconnected(void);
     rust_ble_disconnected();
 }
 
@@ -62,7 +64,12 @@ BT_CONN_CB_DEFINE(conn_callbacks) = {
     .disconnected = disconnected,
 };
 
-void ble_sleep_ms(int32_t milliseconds)
+void sleep_ms(int32_t milliseconds)
 {
     k_sleep(K_MSEC(milliseconds));
+}
+
+int get_light_value(const struct device *dev)
+{
+    return 100;
 }

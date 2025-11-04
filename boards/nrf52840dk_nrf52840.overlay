@@ -1,0 +1,15 @@
+/ {
+  	aliases {
+  		light-sensor = &tsl2591;
+	};
+};
+
+&i2c0 {
+	status = "okay";
+	clock-frequency = <I2C_BITRATE_STANDARD>;
+	tsl2591: tsl2591@29 {
+		status ="okay";
+		compatible = "ams,tsl2591";
+		reg = <0x29>;
+	};
+};
